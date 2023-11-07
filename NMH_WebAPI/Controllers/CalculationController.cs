@@ -25,7 +25,7 @@ namespace NMH_WebAPI.Controllers
         public OutputModel ProcessKey(int key, InputModel inputModel)
         {
             var processedItem = _processHelper.ProcessKey(key, inputModel.Input);
-            //_producer.SendMessage(processedItem);
+            _producer.SendMessage(processedItem);
             return processedItem;
         }
     }
