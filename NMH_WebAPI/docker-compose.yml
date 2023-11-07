@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=Nmh123!
+      - POSTGRES_USER=nmh_db_user
+      - POSTGRES_DB=nmh_db
+  api:
+    build: ./
+    ports:
+     - 5184:5184
+    environment:
+      ASPNETCORE_URLS: http://+:5184
+  rabbitmq:
+    image: rabbitmq:3.8-management-alpine
+    container_name: rabbitmq_NMH
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbituser
+      - RABBITMQ_DEFAULT_PASS=Nmh123!
+    ports:
+      - '5673:5673'
+      - '15673:15673'
+
+networks:
+  default:
+    driver: bridge
