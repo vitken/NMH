@@ -9,8 +9,19 @@ services:
       - POSTGRES_PASSWORD=Nmh123!
       - POSTGRES_USER=nmh_db_user
       - POSTGRES_DB=nmh_db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d nmh_db -U nmh_db_user"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
   api:
     build: ./
+    depends_on:
+      postgres:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
     ports:
      - 5184:5184
     environment:
@@ -24,6 +35,11 @@ services:
     ports:
       - '5673:5673'
       - '15673:15673'
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 networks:
   default:

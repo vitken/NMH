@@ -24,7 +24,7 @@ builder.Services.AddSingleton<IProcessHelper, ProcessHelper>();
 builder.Services.AddDbContext<Context>();
 
 // Hosted service
-builder.Services.AddHostedService<RabbitMqConsumerService>();
+//builder.Services.AddHostedService<RabbitMqConsumerService>();
 
 var app = builder.Build();
 
